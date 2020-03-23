@@ -1,0 +1,30 @@
+@page "/graphqldata"
+@using GraphQLClient
+@inject TodoItemsConsumer TodoItems
+
+<h1>To do list</h1>
+
+<p>This component demonstrates fetching data from graphQL API.</p>
+
+@if (todos == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <ul>
+        @foreach (var todo in todos)
+        {
+            <span>@todo.Title</span><br />
+        }
+    </ul>
+}
+
+@code {
+    private List<TodoItem> todos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        todos = await TodoItems.GetAllToDos();
+    }
+}
